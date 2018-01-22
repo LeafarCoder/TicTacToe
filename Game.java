@@ -1,3 +1,4 @@
+import java.util.*;
 
 public class Game {
 	
@@ -138,7 +139,7 @@ public class Game {
 	}
 
 	public int[] getBestPosition(int depth, int player){
-		int[] ans = new int[] {0,0};
+		List<int[]> ans = new ArrayList<int[]>();
 		int maxValue = -10;
 
 		for(int i = 0; i < boardSize; i++){
@@ -152,13 +153,18 @@ public class Game {
 					int v = miniMax(depth - 1, auxGame, -player);
 					// System.out.println(v+"\n\n**************************************************\n\n ");
 					if(maxValue < v){
+						ans = new ArrayList<int[]>();
 						maxValue = v;
-						ans = new int[] {i,j};
 					}
+					if(maxValue == v){
+						ans.add(new int[]{i,j});
+					}
+					
 				}
 			}
 		}
 		
-		return ans;
+		int idx = new Random().nextInt(ans.size());
+		return ans.get(idx);
 	}
 }
